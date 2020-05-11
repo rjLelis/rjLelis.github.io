@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Renato Lelis Atom">
+
+
+    <link rel="shortcut icon" href="http://localhost:8000/images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="http://localhost:8000/images/favicon.png" type="image/x-icon">
+
+
+
+<meta name="author" content="Renato Lelis" />
+<meta name="description" content="Comparando como lidar com rotas nos dois frameworks mais famosos do Python" />
+<meta name="keywords" content="django, flask">
+
+<meta property="og:site_name" content="Renato Lelis"/>
+<meta property="og:title" content="Flask vs Django — Rotas"/>
+<meta property="og:description" content="Comparando como lidar com rotas nos dois frameworks mais famosos do Python"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/flask-django-rotas.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-06-11 00:00:00-03:00"/>
+<meta property="article:modified_time" content="2020-05-10 00:00:00-03:00"/>
+<meta property="article:author" content="/author/renato-lelis.html">
+<meta property="article:section" content="web"/>
+<meta property="article:tag" content="django"/>
+<meta property="article:tag" content="flask"/>
+<meta property="og:image" content="http://localhost:8000/images/profile.jpg">
+
+  <title>Renato Lelis &ndash; Flask vs Django — Rotas</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="http://localhost:8000/images/profile.jpg" alt="Renato Lelis" title="Renato Lelis">
+      </a>
+      <h1><a href="">Renato Lelis</a></h1>
+
+<p>Desenvolvedor | Inspirante a musico</p>
+
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/renato-lelis" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/rjLelis" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/renato_lelis" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-medium" href="https://medium.com/@renatojlelis" target="_blank"><i class="fa fa-medium"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="">    Home
+</a>
+
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+
+      <a href="/feeds/all.atom.xml">    Atom
+</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="flask-django-rotas">Flask vs Django — Rotas</h1>
+    <p>
+          Posted on ter 11 junho 2019 in <a href="/category/web.html">web</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p><img alt="Rotas" src="/images/flask_django_rotas.jpeg"></p>
+<p>Todo framework web (ou quase todos, não cheguei a trabalhar com todos) tem seu meio de fazer rotas entre suas função e as requisições do que vem do cliente. Nessas rotas também é possível configurar o método HTTP, onde uma rota <code>/user</code> com o método <strong>GET</strong> irá gerar um resultado diferente da rota <code>/user</code> com o método <strong>DELETE</strong>.</p>
+<p>No modelo de arquitetura <strong>REST</strong>, os métodos HTTP têm semântica. Nele é recomendado que o método <strong>GET</strong> seja usado para consultas, o método <strong>POST</strong> para inserir informações, o <strong>PUT</strong> para atualizar e o <strong>DELETE</strong> para deletar. O <strong>REST</strong> determina outras boas práticas mas elas não vem ao caso agora.</p>
+<p>No Django, as rotas são criadas num arquivo chamado urls.py, numa lista chamada <code>urlpatterns</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">namespace</span> <span class="o">=</span> <span class="s1">&#39;usuario&#39;</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">path</span><span class="p">(</span><span class="s1">&#39;user/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">list_users</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;list-users&#39;</span><span class="p">),</span>
+  <span class="n">path</span><span class="p">(</span><span class="s1">&#39;user/&lt;int:pk&gt;&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">user_details</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;user-detail&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+</code></pre></div>
+
+
+<p>Essa lista recebe a função <code>path()</code>, onde é passado a rota e qual a função do módulo <strong>views.py</strong> irá ser chamada.</p>
+<p>No caso do Flask, um decorator é usado para criar as rotas.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/user&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">list_users</span><span class="p">():</span>
+    <span class="c1"># retorna uma lista de usuários</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/user/&lt;int:id&gt;&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">user_details</span><span class="p">(</span><span class="nb">id</span><span class="p">):</span>
+    <span class="c1"># retorna detalhes de um usuário</span>
+</code></pre></div>
+
+
+<p>É o mesmo princípio usado no Django, cada função recebe um decorator, <code>@app.routes</code>, onde é passado sua rota.</p>
+<p>A diferença aqui, é que o Django faz isso em arquivos separados e o Flask consegue fazer em um arquivo só (na verdade o Flask permite criar uma aplicação em um único arquivo se você quiser).</p>
+<p>Outra grande diferença é o segundo argumento no decorator do Flask. Nele nós passamos uma lista de métodos HTTP e quando essa rota for chamada, dependendo do método, uma função diferente é chamada.</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/user&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">list_users</span><span class="p">():</span>
+  <span class="c1"># retorna uma lista de usuários</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/user&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">create_user</span><span class="p">():</span>
+  <span class="c1"># insere um novo usuário na base</span>
+</code></pre></div>
+
+
+<p>No exemplo acima, a rota é a mesma mas os métodos são diferentes, separando as funções que vão ser chamadas.</p>
+<p>No Django, a diferenciação de métodos HTTP deve ser feita dentro da função chamada pela rota.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">list_create_user</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;GET&#39;</span><span class="p">:</span>
+    <span class="c1"># lista os usuários</span>
+  <span class="k">elif</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+    <span class="c1"># cria um usuário</span>
+</code></pre></div>
+
+
+<p>Com isso, sempre que houver a necessidade de alteração em alguma lógica de inserção ou de busca, a alteração vai acontecer em uma única função. Isso deixa a manutenção do código mais engessada.</p>
+<p>Enquanto o Flask oferece mais flexibilidade e simplicidade nas rotas, o Django oferece mais velocidade na prototipagem (class based views for the win!) e uma arquitetura bem definida, embora obrigue o desenvolvedor a usar suas convenções.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/django.html">django</a>
+      <a href="/tag/flask.html">flask</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy; Renato Lelis 2020</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Renato Lelis ",
+  "url" : "",
+  "image": "http://localhost:8000/images/profile.jpg",
+  "description": "Um blog onde vou escrever artigos técnicos e outras coisas que eu quiser"
+}
+</script>
+
+</body>
+</html>

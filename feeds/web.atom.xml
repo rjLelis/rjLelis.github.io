@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Renato Lelis - web</title><link href="https://rjlelis.github.io/" rel="alternate"></link><link href="https://rjlelis.github.io/feeds/web.atom.xml" rel="self"></link><id>https://rjlelis.github.io/</id><updated>2020-05-10T00:00:00-03:00</updated><subtitle>Desenvolvedor | Inspirante a musico</subtitle><entry><title>Flask vs Django — Rotas</title><link href="https://rjlelis.github.io/flask-django-rotas.html" rel="alternate"></link><published>2019-06-11T00:00:00-03:00</published><updated>2020-05-10T00:00:00-03:00</updated><author><name>Renato Lelis</name></author><id>tag:rjlelis.github.io,2019-06-11:/flask-django-rotas.html</id><summary type="html">&lt;p&gt;Comparando como lidar com rotas nos dois frameworks mais famosos do Python&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;img alt="Rotas" src="/images/flask_django_rotas.jpeg"&gt;&lt;/p&gt;
+&lt;p&gt;Todo framework web (ou quase todos, não cheguei a trabalhar com todos) tem seu meio de fazer rotas entre suas função e as requisições do que vem do cliente. Nessas rotas também é possível configurar o método HTTP, onde uma rota &lt;code&gt;/user&lt;/code&gt; com o método &lt;strong&gt;GET&lt;/strong&gt; irá gerar um resultado diferente da rota &lt;code&gt;/user&lt;/code&gt; com o método &lt;strong&gt;DELETE&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;No modelo de arquitetura &lt;strong&gt;REST&lt;/strong&gt;, os métodos HTTP têm semântica. Nele é recomendado que o método &lt;strong&gt;GET&lt;/strong&gt; seja usado para consultas, o método &lt;strong&gt;POST&lt;/strong&gt; para inserir informações, o &lt;strong&gt;PUT&lt;/strong&gt; para atualizar e o &lt;strong&gt;DELETE&lt;/strong&gt; para deletar. O &lt;strong&gt;REST&lt;/strong&gt; determina outras boas práticas mas elas não vem ao caso agora.&lt;/p&gt;
+&lt;p&gt;No Django, as rotas são criadas num arquivo chamado urls.py, numa lista chamada &lt;code&gt;urlpatterns&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.urls&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;.&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;views&lt;/span&gt;
+
+&lt;span class="n"&gt;namespace&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;usuario&amp;#39;&lt;/span&gt;
+
+&lt;span class="n"&gt;urlpatterns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+  &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;user/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;views&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list_users&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;list-users&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+  &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;user/&amp;lt;int:pk&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;views&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;user_details&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;user-detail&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Essa lista recebe a função &lt;code&gt;path()&lt;/code&gt;, onde é passado a rota e qual a função do módulo &lt;strong&gt;views.py&lt;/strong&gt; irá ser chamada.&lt;/p&gt;
+&lt;p&gt;No caso do Flask, um decorator é usado para criar as rotas.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;
+
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vm"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="nd"&gt;@app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/user&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;list_users&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="c1"&gt;# retorna uma lista de usuários&lt;/span&gt;
+
+&lt;span class="nd"&gt;@app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/user/&amp;lt;int:id&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;user_details&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="c1"&gt;# retorna detalhes de um usuário&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;É o mesmo princípio usado no Django, cada função recebe um decorator, &lt;code&gt;@app.routes&lt;/code&gt;, onde é passado sua rota.&lt;/p&gt;
+&lt;p&gt;A diferença aqui, é que o Django faz isso em arquivos separados e o Flask consegue fazer em um arquivo só (na verdade o Flask permite criar uma aplicação em um único arquivo se você quiser).&lt;/p&gt;
+&lt;p&gt;Outra grande diferença é o segundo argumento no decorator do Flask. Nele nós passamos uma lista de métodos HTTP e quando essa rota for chamada, dependendo do método, uma função diferente é chamada.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nd"&gt;@app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/user&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;methods&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;GET&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;list_users&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+  &lt;span class="c1"&gt;# retorna uma lista de usuários&lt;/span&gt;
+
+
+&lt;span class="nd"&gt;@app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/user&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;methods&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;POST&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;create_user&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+  &lt;span class="c1"&gt;# insere um novo usuário na base&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;No exemplo acima, a rota é a mesma mas os métodos são diferentes, separando as funções que vão ser chamadas.&lt;/p&gt;
+&lt;p&gt;No Django, a diferenciação de métodos HTTP deve ser feita dentro da função chamada pela rota.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;list_create_user&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;method&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;GET&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="c1"&gt;# lista os usuários&lt;/span&gt;
+  &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;method&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;POST&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="c1"&gt;# cria um usuário&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Com isso, sempre que houver a necessidade de alteração em alguma lógica de inserção ou de busca, a alteração vai acontecer em uma única função. Isso deixa a manutenção do código mais engessada.&lt;/p&gt;
+&lt;p&gt;Enquanto o Flask oferece mais flexibilidade e simplicidade nas rotas, o Django oferece mais velocidade na prototipagem (class based views for the win!) e uma arquitetura bem definida, embora obrigue o desenvolvedor a usar suas convenções.&lt;/p&gt;</content><category term="web"></category><category term="django"></category><category term="flask"></category></entry></feed>

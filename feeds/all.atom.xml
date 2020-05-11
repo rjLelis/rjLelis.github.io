@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Renato Lelis</title><link href="https://rjlelis.github.io/" rel="alternate"></link><link href="https://rjlelis.github.io/feeds/all.atom.xml" rel="self"></link><id>https://rjlelis.github.io/</id><updated>2020-05-10T00:00:00-03:00</updated><subtitle>Desenvolvedor | Inspirante a musico</subtitle><entry><title>Trabalhando com JSON no Python</title><link href="https://rjlelis.github.io/trabalhando-json-python.html" rel="alternate"></link><published>2019-09-22T00:00:00-03:00</published><updated>2020-05-10T00:00:00-03:00</updated><author><name>Renato Lelis</name></author><id>tag:rjlelis.github.io,2019-09-22:/trabalhando-json-python.html</id><summary type="html">&lt;p&gt;Como facilmente manipular um JSON com Python&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;img alt="Json" src="/images/json.jpeg"&gt;&lt;/p&gt;
+&lt;p&gt;O JSON (Javascript Object Notation) é o formato mais usado para integração entre sistemas. Toda a linguagem de programação tem sua maneira de manipulá-lo. O Python tem uma biblioteca, chamada json, muito boa e simples de usar para lidar com este tipo de formatação de dados.&lt;/p&gt;
+&lt;p&gt;A biblioteca &lt;strong&gt;json&lt;/strong&gt; tem 4 métodos básicos, tanto para serializar um objeto, quanto para deserializar-lo.&lt;/p&gt;
+&lt;h2&gt;dump e dumps&lt;/h2&gt;
+&lt;p&gt;Usamos o &lt;strong&gt;dump&lt;/strong&gt; e o &lt;strong&gt;dumps&lt;/strong&gt; para transformar um objeto do Python (listas, dicionários, tuplas) nos formato &lt;strong&gt;JSON&lt;/strong&gt; (serializar). O primeiro serve para jogar um objeto diretamente em um arquivo.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
+&lt;span class="n"&gt;dados&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;nome&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Renato Lelis&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;profissao&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Desenvolvedor de sistemas&amp;#39;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;dados.json&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;w&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;json_file&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dados&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;json_file&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;indent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;No exemplo acima eu criei um dicionário com alguns dados e o inseri dentro de um arquivo &lt;strong&gt;.json&lt;/strong&gt;. O método &lt;strong&gt;dump&lt;/strong&gt; recebe dois argumentos obrigatórios, o objeto que vai ser serializado e o arquivo em que ele vai ser gravado. O resultado:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;nome&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Renato Lelis&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;profissao&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Desenvolvedor de sistemas&amp;quot;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;O terceiro argumento é número da indentação do &lt;strong&gt;JSON&lt;/strong&gt;. Não é obrigatório mas em termos de visualização é um bom argumento para adicionar. Sem ele seu arquivo ficaria assim:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;nome&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Renato Lelis&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;&amp;quot;profissao&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Desenvolvedor de sistemas&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;E o &lt;strong&gt;dumps&lt;/strong&gt; simplesmente transforma o objeto em string (o &lt;code&gt;s&lt;/code&gt; no final do &lt;strong&gt;dumps&lt;/strong&gt; é uma dica) em vez de gravar o objeto dentro de um arquivo.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
+&lt;span class="n"&gt;dados&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;nome&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Renato Lelis&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;profissao&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Desenvolvedor de sistemas&amp;#39;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;dados_json&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dumps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dados&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dados_json&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="c1"&gt;# &amp;lt;class &amp;#39;str&amp;#39;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Com &lt;strong&gt;dumps&lt;/strong&gt; só precisamos dizer qual objeto serializar e ele faz o resto. O argumento &lt;strong&gt;indent&lt;/strong&gt; também pode ser utilizado neste método se quiser usá-lo.&lt;/p&gt;
+&lt;h2&gt;load e loads&lt;/h2&gt;
+&lt;p&gt;Usamos o &lt;strong&gt;load&lt;/strong&gt; para fazer o oposto do &lt;strong&gt;dump&lt;/strong&gt;, ou seja, deserializar o &lt;strong&gt;JSON&lt;/strong&gt; em um objeto do Python.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
+
+&lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;dados.json&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;r&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;json_file&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;dados&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;load&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;json_file&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dados&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dados&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="c1"&gt;# {&amp;#39;nome&amp;#39;: &amp;#39;Renato Lelis&amp;#39;, &amp;#39;profissao&amp;#39;: &amp;#39;Desenvolvedor de sistemas&amp;#39;}&lt;/span&gt;
+&lt;span class="c1"&gt;# &amp;lt;class &amp;#39;dict&amp;#39;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Lendo o arquivo que criamos na seção anterior, o método &lt;strong&gt;load&lt;/strong&gt; só precisa de um argumento, o arquivo que contém o &lt;strong&gt;JSON&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;E o método &lt;strong&gt;loads&lt;/strong&gt;, assim como o &lt;strong&gt;dumps&lt;/strong&gt;, é para lidar com &lt;strong&gt;JSON&lt;/strong&gt; em formato de string. No caso do &lt;strong&gt;loads&lt;/strong&gt;, transformar uma string em um objeto Python.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
+&lt;span class="n"&gt;dados&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{&amp;quot;nome&amp;quot;: &amp;quot;Renato Lelis&amp;quot;,&amp;quot;profissao&amp;quot;: &amp;quot;Desenvolvedor de sistemas&amp;quot;}&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;dados_json&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;loads&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dados&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dados_json&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="c1"&gt;# &amp;lt;class &amp;#39;dict&amp;#39;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Neste artigo, vimos o quão fácil é de se manipular o &lt;strong&gt;JSON&lt;/strong&gt; com a biblioteca padrão do Python.&lt;/p&gt;</content><category term="python"></category><category term="python"></category><category term="json"></category></entry><entry><title>Flask vs Django — Rotas</title><link href="https://rjlelis.github.io/flask-django-rotas.html" rel="alternate"></link><published>2019-06-11T00:00:00-03:00</published><updated>2020-05-10T00:00:00-03:00</updated><author><name>Renato Lelis</name></author><id>tag:rjlelis.github.io,2019-06-11:/flask-django-rotas.html</id><summary type="html">&lt;p&gt;Comparando como lidar com rotas nos dois frameworks mais famosos do Python&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;img alt="Rotas" src="/images/flask_django_rotas.jpeg"&gt;&lt;/p&gt;
+&lt;p&gt;Todo framework web (ou quase todos, não cheguei a trabalhar com todos) tem seu meio de fazer rotas entre suas função e as requisições do que vem do cliente. Nessas rotas também é possível configurar o método HTTP, onde uma rota &lt;code&gt;/user&lt;/code&gt; com o método &lt;strong&gt;GET&lt;/strong&gt; irá gerar um resultado diferente da rota &lt;code&gt;/user&lt;/code&gt; com o método &lt;strong&gt;DELETE&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;No modelo de arquitetura &lt;strong&gt;REST&lt;/strong&gt;, os métodos HTTP têm semântica. Nele é recomendado que o método &lt;strong&gt;GET&lt;/strong&gt; seja usado para consultas, o método &lt;strong&gt;POST&lt;/strong&gt; para inserir informações, o &lt;strong&gt;PUT&lt;/strong&gt; para atualizar e o &lt;strong&gt;DELETE&lt;/strong&gt; para deletar. O &lt;strong&gt;REST&lt;/strong&gt; determina outras boas práticas mas elas não vem ao caso agora.&lt;/p&gt;
+&lt;p&gt;No Django, as rotas são criadas num arquivo chamado urls.py, numa lista chamada &lt;code&gt;urlpatterns&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.urls&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;.&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;views&lt;/span&gt;
+
+&lt;span class="n"&gt;namespace&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;usuario&amp;#39;&lt;/span&gt;
+
+&lt;span class="n"&gt;urlpatterns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+  &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;user/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;views&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list_users&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;list-users&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+  &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;user/&amp;lt;int:pk&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;views&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;user_details&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;user-detail&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Essa lista recebe a função &lt;code&gt;path()&lt;/code&gt;, onde é passado a rota e qual a função do módulo &lt;strong&gt;views.py&lt;/strong&gt; irá ser chamada.&lt;/p&gt;
+&lt;p&gt;No caso do Flask, um decorator é usado para criar as rotas.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;
+
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vm"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="nd"&gt;@app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/user&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;list_users&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="c1"&gt;# retorna uma lista de usuários&lt;/span&gt;
+
+&lt;span class="nd"&gt;@app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/user/&amp;lt;int:id&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;user_details&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="c1"&gt;# retorna detalhes de um usuário&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;É o mesmo princípio usado no Django, cada função recebe um decorator, &lt;code&gt;@app.routes&lt;/code&gt;, onde é passado sua rota.&lt;/p&gt;
+&lt;p&gt;A diferença aqui, é que o Django faz isso em arquivos separados e o Flask consegue fazer em um arquivo só (na verdade o Flask permite criar uma aplicação em um único arquivo se você quiser).&lt;/p&gt;
+&lt;p&gt;Outra grande diferença é o segundo argumento no decorator do Flask. Nele nós passamos uma lista de métodos HTTP e quando essa rota for chamada, dependendo do método, uma função diferente é chamada.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nd"&gt;@app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/user&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;methods&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;GET&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;list_users&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+  &lt;span class="c1"&gt;# retorna uma lista de usuários&lt;/span&gt;
+
+
+&lt;span class="nd"&gt;@app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/user&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;methods&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;POST&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;create_user&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+  &lt;span class="c1"&gt;# insere um novo usuário na base&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;No exemplo acima, a rota é a mesma mas os métodos são diferentes, separando as funções que vão ser chamadas.&lt;/p&gt;
+&lt;p&gt;No Django, a diferenciação de métodos HTTP deve ser feita dentro da função chamada pela rota.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;list_create_user&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;method&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;GET&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="c1"&gt;# lista os usuários&lt;/span&gt;
+  &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;method&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;POST&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="c1"&gt;# cria um usuário&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Com isso, sempre que houver a necessidade de alteração em alguma lógica de inserção ou de busca, a alteração vai acontecer em uma única função. Isso deixa a manutenção do código mais engessada.&lt;/p&gt;
+&lt;p&gt;Enquanto o Flask oferece mais flexibilidade e simplicidade nas rotas, o Django oferece mais velocidade na prototipagem (class based views for the win!) e uma arquitetura bem definida, embora obrigue o desenvolvedor a usar suas convenções.&lt;/p&gt;</content><category term="web"></category><category term="django"></category><category term="flask"></category></entry></feed>

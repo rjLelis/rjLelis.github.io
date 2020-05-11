@@ -6,12 +6,12 @@ from datetime import datetime
 MAIN_MENU = True
 
 AUTHOR = 'Renato Lelis'
-SITEURL = 'https://rjlelis.github.io'
+SITEURL = 'https://rjlelis.github.io/'
 SITENAME = "Renato Lelis"
 SITETITLE = "Renato Lelis"
 SITESUBTITLE = "Desenvolvedor | Inspirante a musico"
 SITEDESCRIPTION = "Um blog onde vou escrever artigos técnicos e outras coisas que eu quiser"
-SITELOGO = SITEURL + "/images/profile.jpg"
+SITELOGO = SITEURL + "images/profile.jpg"
 
 COPYRIGHT_NAME = 'Renato Lelis'
 COPYRIGHT_YEAR = datetime.today().year

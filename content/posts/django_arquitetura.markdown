@@ -52,7 +52,7 @@ A próxima camada é a de `Template`. Nela é onde os dados vão ser apresentado
 </html>
 ```
 
-Existem três tipos de expressões. A primeira delas é o `{% %}`, que permite executar comandos do python, como o for eachs e o ifs, e outras funcionalidades do próprio sistema de templates do Django.
+Existem três tipos de expressões. A primeira delas é o `{%%}`, que permite executar comandos do python, como o for eachs e o ifs, e outras funcionalidades do próprio sistema de templates do Django.
 
 A outra expressão é o `{{ }}`, ele é usado para acessar variáveis e mostrá-las na tela. Simples assim.
 

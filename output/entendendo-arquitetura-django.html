@@ -124,7 +124,7 @@
 </code></pre></div>
 
 
-<p>Existem três tipos de expressões. A primeira delas é o <code>{% %}</code>, que permite executar comandos do python, como o for eachs e o ifs, e outras funcionalidades do próprio sistema de templates do Django.</p>
+<p>Existem três tipos de expressões. A primeira delas é o <code>{%%}</code>, que permite executar comandos do python, como o for eachs e o ifs, e outras funcionalidades do próprio sistema de templates do Django.</p>
 <p>A outra expressão é o <code>{{ }}</code>, ele é usado para acessar variáveis e mostrá-las na tela. Simples assim.</p>
 <p>E a última expressão é uma variação da anterior, que é simplesmente um filtro representado pelo pipe. No exemplo mostrado é aplicado um filtro de data na variável <strong>usuario.data_de_nascimento</strong>. Há diversos filtros disponíveis, você pode conferir mais delas <a href="https://docs.djangoproject.com/pt-br/3.0/ref/templates/builtins/">aqui</a>.</p>
 <p>E por fim vem a camada de <code>View</code>. Nela é onde as informações dos templates são tratadas. Existem dois tipos de views, as baseadas em função e as baseadas em classes.</p>

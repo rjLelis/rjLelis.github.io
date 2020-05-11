@@ -6,7 +6,7 @@ from datetime import datetime
 MAIN_MENU = True
 
 AUTHOR = 'Renato Lelis'
-SITEURL = 'https://rjlelis.github.io/'
+SITEURL = 'https://rjlelis.github.io'
 SITENAME = "Renato Lelis"
 SITETITLE = "Renato Lelis"
 SITESUBTITLE = "Desenvolvedor | Inspirante a musico"
